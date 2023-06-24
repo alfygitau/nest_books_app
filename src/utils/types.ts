@@ -1,8 +1,15 @@
 import { Exclude } from 'class-transformer';
 
+export enum UserRole {
+  Admin = 'admin',
+  User = 'user',
+  Guest = 'guest',
+}
+
 export type CreateUserParams = {
   username: string;
   email: string;
+  role: UserRole;
   password: string;
 };
 

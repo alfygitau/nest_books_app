@@ -25,13 +25,14 @@ export class UsersService {
     return this.userRepository.find({ relations: ['profile', 'reviews'] });
   }
   async createUser(user: CreateUserParams) {
-    const { password, username, email } = user;
+    const { password, username, email, role } = user;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await this.userRepository.create({
       username,
       email,
+      role,
       password: hashedPassword,
     });
     return this.userRepository.save(newUser);

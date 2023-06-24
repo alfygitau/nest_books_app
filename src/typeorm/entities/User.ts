@@ -10,6 +10,7 @@ import {
 import { Profile } from './Profile';
 import { Review } from './Review';
 import { Exclude } from 'class-transformer';
+import { UserRole } from 'src/utils/types';
 
 @Entity({ name: 'users' })
 export class User {
@@ -25,6 +26,9 @@ export class User {
   @Column()
   @Exclude()
   password: string;
+
+  @Column()
+  role: UserRole;
 
   @CreateDateColumn()
   createAt: Date;
