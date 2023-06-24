@@ -9,10 +9,12 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { plainToClass } from 'class-transformer';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
 import { CreateUserProfileDto } from 'src/users/dtos/CreateUserProfile.dto';
 import { UpdateUserDto } from 'src/users/dtos/UpdateUser.dto';
 import { UsersService } from 'src/users/services/users/users.service';
+import { SerializedUser } from 'src/utils/types';
 
 @Controller('users')
 export class UsersController {
@@ -20,7 +22,7 @@ export class UsersController {
   @Get()
   async getUsers() {
     let users = await this.userService.fetchUsers();
-    return users;
+    return plainToClass(SerializedUser, users);
   }
 
   @Post(':id/profile')
@@ -28,12 +30,14 @@ export class UsersController {
     @Param('id', ParseIntPipe) id: number,
     @Body() userPrfile: CreateUserProfileDto,
   ) {
-    return this.userService.createUserProfile(id, userPrfile);
+    const profile = this.userService.createUserProfile(id, userPrfile);
+    return plainToClass(SerializedUser, profile);
   }
 
   @Post()
   createUser(@Body() userPayload: CreateUserDto) {
-    return this.userService.createUser(userPayload);
+    const newUser = this.userService.createUser(userPayload);
+    return plainToClass(SerializedUser, newUser);
   }
 
   @Get(':id')
@@ -42,7 +46,7 @@ export class UsersController {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    return user;
+    return plainToClass(SerializedUser, user);
   }
 
   @Put(':id')
@@ -54,7 +58,7 @@ export class UsersController {
     if (!updatedUser) {
       throw new NotFoundException('User not found');
     }
-    return updatedUser;
+    return plainToClass(SerializedUser, updatedUser);
   }
 
   @Delete(':id')

@@ -1,3 +1,5 @@
+import { Exclude } from 'class-transformer';
+
 export type CreateUserParams = {
   username: string;
   email: string;
@@ -31,3 +33,15 @@ export type CreateUserReviewParams = {
   rating: number;
   comment?: string;
 };
+
+export class SerializedUser {
+  username: string;
+  email: string;
+
+  @Exclude()
+  password: string;
+
+  constructor(partial: Partial<SerializedUser>) {
+    Object.assign(this, partial);
+  }
+}

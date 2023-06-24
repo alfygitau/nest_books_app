@@ -10,5 +10,6 @@ import { Review } from 'src/typeorm/entities/Review';
   imports: [TypeOrmModule.forFeature([User, Profile, Review])],
   controllers: [UsersController],
   providers: [UsersService],
+  exports: [UsersService],
 })
 export class UsersModule {}

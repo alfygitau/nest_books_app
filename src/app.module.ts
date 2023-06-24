@@ -9,6 +9,7 @@ import { Book } from './typeorm/entities/Book';
 import { BooksModule } from './books/books.module';
 import { Review } from './typeorm/entities/Review';
 import { ReviewsModule } from './reviews/reviews.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ReviewsModule } from './reviews/reviews.module';
     UsersModule,
     BooksModule,
     ReviewsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
